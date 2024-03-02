@@ -4,7 +4,7 @@ screen =customtkinter.CTk()
 screen.title("Mass Mailer")
 screen.geometry("500x300")
 screen.resizable(False,False)
-screen.configure(fg_color="#495867")
+screen.configure(fg_color="gray65")
 
 file_path=""
 
@@ -53,50 +53,50 @@ def login_funct():
             mail_sender.delete(0,END)
             app_password.delete(0,END)
 
-    tabview = customtkinter.CTkTabview(master=screen,width=490,height=280)
+    tabview = customtkinter.CTkTabview(master=screen,width=490,height=280,fg_color="gray65")
     tabview.place(x=5,y=5)
 
-    tabview.add("tab 2")  # add tab at the end
-    tabview.set("tab 2")  # set currently visible tab
+    tabview.add("Login")  # add tab at the end
+    tabview.set("Login")  # set currently visible tab
 
-    mail_sender =customtkinter.CTkEntry(tabview.tab("tab 2"),placeholder_text="Enter your mail",
+    mail_sender =customtkinter.CTkEntry(tabview.tab("Login"),placeholder_text="Enter your mail",
                                        corner_radius=10,width=250,height=30,
-                                       font=font2,fg_color="#BBC6D3",border_color="gray25",
-                                       placeholder_text_color="black",text_color="black")
+                                       font=font2,fg_color="white",border_color="gray25",
+                                       placeholder_text_color="black",text_color="black",bg_color="gray65")
     
-    app_password =customtkinter.CTkEntry(tabview.tab("tab 2"),placeholder_text="Enter app password",
+    app_password =customtkinter.CTkEntry(tabview.tab("Login"),placeholder_text="Enter app password",
                                        corner_radius=10,width=250,height=30,
-                                       font=font2,fg_color="#BBC6D3",border_color="gray25",
-                                       placeholder_text_color="black",text_color="black")
+                                       font=font2,fg_color="white",border_color="gray25",
+                                       placeholder_text_color="black",text_color="black",bg_color="gray65")
     mail_sender.place(x=120,y=30)
     app_password.place(x=120,y=65)
     
     def fback_func():
         tabview.destroy()
 
-    fback_button = customtkinter.CTkButton(tabview.tab("tab 2"),width=30,
+    fback_button = customtkinter.CTkButton(tabview.tab("Login"),width=30,
                                  height=30,
                                  border_color="gray25",
                                  border_width=2,
                                  corner_radius=10,
-                                 fg_color="#c18c5d",
-                                 bg_color="#495867",
+                                 fg_color="#0073B7",
+                                 bg_color="gray65",
                                  text="back",
-                                 text_color="black",
-                                 hover_color="#ecc8af",
+                                 text_color="white",
+                                 hover_color="#00578A",
                                  font=font1,
                                  command=fback_func)
 
-    fsave_button = customtkinter.CTkButton(tabview.tab("tab 2"),width=30,
+    fsave_button = customtkinter.CTkButton(tabview.tab("Login"),width=30,
                                  height=30,
                                  border_color="gray25",
                                  border_width=2,
                                  corner_radius=10,
-                                 fg_color="#c18c5d",
-                                 bg_color="#495867",
+                                 fg_color="#0073B7",
+                                 bg_color="gray65",
                                  text="save",
-                                 text_color="black",
-                                 hover_color="#ecc8af",
+                                 text_color="white",
+                                 hover_color="#00578A",
                                  font=font1,
                                  command=save_func)
     
@@ -116,7 +116,11 @@ def send_func():
         text_box.configure(border_color="red")
 
     else:
+        json_login_path = "Login.json"
 
+        if  not os.path.exists(json_login_path):
+            login_button.configure(border_color="red")
+        
         if file_path:
 
             mailss = []
@@ -163,75 +167,99 @@ def send_func():
         else:
             to_mail_button.configure(border_color="red",border_width=2)
 
+def reset_func():
+
+    json_login_path = "Login.json"
+    json_mails_path = "mails.json"
+
+    if os.path.exists(json_login_path):
+       os.remove(json_login_path)
+    else:
+        pass
+
+    if os.path.exists(json_mails_path):
+       os.remove(json_mails_path)
+    else:
+        pass
 #------------------------------ FRAMES -----------------------------------#
 
 logo_frame = customtkinter.CTkFrame(screen, width=200,
-                               height=200,
-                               fg_color="#c18c5d",
+                               height=210,
+                               fg_color="gray75",
                                border_width=2,
-                               border_color="gray25",
+                               border_color="gray55",
                                corner_radius=10)
-
-#----------------------------- LABELS ------------------------------------#
-
-logo = customtkinter.CTkLabel(screen,text='📑',bg_color="#c18c5d",font=("Arial",150),text_color="black")
 
 
 #----------------------------- BUTTONS -------------------------------------#
 
 send_button = customtkinter.CTkButton(screen,width=35,
-                                 height=85,
-                                 border_color="gray25",
+                                 height=30,
+                                 border_color="#0073B7",
                                  border_width=2,
                                  corner_radius=10,
-                                 fg_color="#c18c5d",
-                                 bg_color="#495867",
-                                 text="Send \nmail",
-                                 text_color="black",
-                                 hover_color="#ecc8af",
+                                 fg_color="#00578A",
+                                 bg_color="gray65",
+                                 text="Send Mail",
+                                 text_color="white",
+                                 hover_color="#0073B7",
                                  font=font1,
                                  command=send_func)
 
 support_button = customtkinter.CTkButton(screen,width=30,
                                  height=30,
-                                 border_color="gray25",
+                                 border_color="#C7C7C7",
                                  border_width=2,
                                  corner_radius=10,
-                                 fg_color="#c18c5d",
-                                 bg_color="#495867",
+                                 fg_color="#0073B7",
+                                 bg_color="gray65",
                                  text=" Help ",
-                                 text_color="black",
-                                 hover_color="#ecc8af",
+                                 text_color="white",
+                                 hover_color="#00578A",
                                  font=font1,
                                  command=support_func)
 
 login_button =  customtkinter.CTkButton(master=screen,
                                  width=30,
                                  height=30,
-                                 border_color="gray25",
+                                 border_color="#C7C7C7",
                                  border_width=2,
                                  corner_radius=10,
-                                 fg_color="#c18c5d",
-                                 bg_color="#495867",
+                                 fg_color="#0073B7",
+                                 bg_color="gray65",
                                  text="Login",
-                                 text_color="black",
-                                 hover_color="#ecc8af",
+                                 text_color="white",
+                                 hover_color="#00578A",
                                  font=font1,
                                  command=login_funct)
 
 to_mail_button =  customtkinter.CTkButton(master=screen,
                                  width=30,
                                  height=30,
-                                 border_color="gray25",
+                                 border_color="#C7C7C7",
                                  border_width=2,
                                  corner_radius=10,
-                                 fg_color="#c18c5d",
-                                 bg_color="#495867",
+                                 fg_color="#0073B7",
+                                 bg_color="gray65",
                                  text="Rcpnt",
-                                 text_color="black",
-                                 hover_color="#ecc8af",
+                                 text_color="white",
+                                 hover_color="#00578A",
                                  font=font1,
                                  command=get_rcpnt)
+
+reset_button =  customtkinter.CTkButton(master=screen,
+                                 width=30,
+                                 height=30,
+                                 border_color="#C7C7C7",
+                                 border_width=2,
+                                 corner_radius=10,
+                                 fg_color="#0073B7",
+                                 bg_color="gray65",
+                                 text="Reset",
+                                 text_color="white",
+                                 hover_color="#00578A",
+                                 font=font1,
+                                 command=reset_func)
 
 
 
@@ -239,21 +267,21 @@ to_mail_button =  customtkinter.CTkButton(master=screen,
 
 subject_entry = customtkinter.CTkEntry(screen,placeholder_text="Enter subject",
                                        corner_radius=10,width=150,height=30,
-                                       font=font2,fg_color="#BBC6D3",border_color="gray25",
-                                       placeholder_text_color="black",text_color="black")
+                                       font=font2,fg_color="#FFFFFF",border_color="gray55",
+                                       placeholder_text_color="#333333",text_color="#333333",bg_color="gray75")
 
-text_box = customtkinter.CTkTextbox(screen,width=160,height=145,border_color="gray25",border_width=2,)
+text_box = customtkinter.CTkTextbox(screen,width=160,height=145,border_color="gray55",text_color="black",border_width=2,fg_color="#F2F2F2",bg_color="gray75")
 
 
 #-------------------------- PLACES ---------------------------#
-login_button.place(x=400,y=60)
-text_box.place(x=225,y=105)
-subject_entry.place(x=230,y=65)
-to_mail_button.place(x=400, y=130)
-send_button.place(x=400, y=165)
-support_button.place(x=400,y=95)
-logo.place(x=20,y=55)
-logo_frame.place(x=10,y=50)
+login_button.place(x=270,y=85)
+text_box.place(x=60,y=95)
+subject_entry.place(x=65,y=55)
+to_mail_button.place(x=350, y=85)
+send_button.place(x=290, y=165)
+reset_button.place(x=350,y=125)
+support_button.place(x=270,y=125)
+logo_frame.place(x=40,y=45)
 
 
 
